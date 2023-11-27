@@ -7,10 +7,7 @@ let matrix = [
 [1, 1, 0, 0, 0],
 [1, 1, 0, 2, 0],
 [1, 1, 0, 0, 0]
-];
-
-
-    
+]; 
 
 let grunArr = [];
 let gelbArr = [];
@@ -41,8 +38,7 @@ let seite=10;
 function setup (){
     // matrix = Matrix(100,100)
     // console.log(matrix)
-    // matrix[50][50]=5
-    
+    // matrix[50][50]=5;
 
     frameRate(5);
     createCanvas(matrix[0].length*seite+1,matrix.length*seite+1);

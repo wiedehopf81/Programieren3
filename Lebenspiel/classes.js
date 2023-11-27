@@ -1,9 +1,8 @@
-class Grass {
-    constructor(x, y) {
+class LivingCreature {
+    constructor(x, y, colorValue) {
         this.y = y;
         this.x = x;
-        this.colorValue = 1;
-        this.multiply = 0;
+        this.colorValue = colorValue;
         this.neighbors = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -15,7 +14,6 @@ class Grass {
             [this.x + 1, this.y + 1],
         ]
     }
-
     chooseCell(symbol) {
         let found = [];
         for (let i = 0; i < this.neighbors.length; i++) {
@@ -31,7 +29,39 @@ class Grass {
         }
         return found;
     }
-
+    updateNeighbours() {
+        this.neighbors = [
+            [this.x - 1, this.y - 1],
+            [this.x, this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x, this.y + 1],
+            [this.x + 1, this.y + 1],
+        ]
+    }
+    move() {
+        let foundFields = this.chooseCell(0)
+        if (foundFields.length > 0) {
+            let newPos = random(foundFields);
+            let newX = newPos[0];
+            let newY = newPos[1];
+            matrix[newY][newX] = this.colorValue
+            matrix[this.y][this.x] = 0
+            this.x = newX
+            this.y = newY
+        }
+    }
+}
+class Grass extends LivingCreature{
+    constructor(x, y) {
+        super(x, y, 1);
+        this.multiply = 0;
+    }
+    chooseCell(symbol) {
+        return super.chooseCell(symbol);
+    }
     mul() {
         this.multiply++;
         if (this.multiply >= 6) {
@@ -46,66 +76,22 @@ class Grass {
         }
     }
 }
-
-class Grassfraser {
+class Grassfraser extends LivingCreature{
     constructor(x, y) {
-        this.y = y;
-        this.x = x;
-        this.colorValue = 2;
+        super(x, y, 2);
         this.eatCounter = 0;
         this.notEatCounter = 0;
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
     }
     updateNeighbours() {
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
+        super.updateNeighbours();
     }
 
     chooseCell(symbol) {
-        this.updateNeighbours()
-        let found = [];
-        for (let i = 0; i < this.neighbors.length; i++) {
-            let pos = this.neighbors[i];
-            let x = pos[0];
-            let y = pos[1];
-
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] === symbol) {
-                    found.push(pos);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(symbol);
     }
 
     move() {
-        let foundFields = this.chooseCell(0)
-        if (foundFields.length > 0) {
-            let newPos = random(foundFields);
-            let newX = newPos[0];
-            let newY = newPos[1];
-            matrix[newY][newX] = this.colorValue
-            matrix[this.y][this.x] = 0
-            this.x = newX
-            this.y = newY
-        }
+        super.move();
     }
     eat() {
         let foundFields = [this.chooseCell(1), this.chooseCell(5)]
@@ -176,66 +162,20 @@ class Grassfraser {
         }
     }
 }
-
-class Fleischfraser {
+class Fleischfraser extends LivingCreature{
     constructor(x, y) {
-        this.y = y;
-        this.x = x;
-        this.colorValue = 3;
+        super(x, y, 3);
         this.eatCounter = 0;
         this.notEatCounter = 0;
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
     }
     updateNeighbours() {
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
+        super.updateNeighbours();
     }
-
     chooseCell(symbol) {
-        this.updateNeighbours()
-        let found = [];
-        for (let i = 0; i < this.neighbors.length; i++) {
-            let pos = this.neighbors[i];
-            let x = pos[0];
-            let y = pos[1];
-
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] === symbol) {
-                    found.push(pos);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(symbol);
     }
-
     move() {
-        let foundFields = this.chooseCell(0)
-        if (foundFields.length > 0) {
-            let newPos = random(foundFields);
-            let newX = newPos[0];
-            let newY = newPos[1];
-            matrix[newY][newX] = this.colorValue
-            matrix[this.y][this.x] = 0
-            this.x = newX
-            this.y = newY
-        }
+        super.move();
     }
     eat() {
         let foundFields = [this.chooseCell(2), this.chooseCell(5)]
@@ -310,65 +250,20 @@ class Fleischfraser {
 // stirbt nach 7 Durchlaufe
 // mul nach 28 Durchlaufe
 // frisst alle
-class Mensch {
+class Mensch extends LivingCreature{
     constructor(x, y) {
-        this.y = y;
-        this.x = x;
-        this.colorValue = 4;
+        super(x, y, 4);
         this.eatCounter = 0;
         this.notEatCounter = 0;
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
     }
     updateNeighbours() {
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
+        super.updateNeighbours();
     }
-
     chooseCell(symbol) {
-        this.updateNeighbours()
-        let found = [];
-        for (let i = 0; i < this.neighbors.length; i++) {
-            let pos = this.neighbors[i];
-            let x = pos[0];
-            let y = pos[1];
-
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] === symbol) {
-                    found.push(pos);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(symbol);
     }
-
     move() {
-        let foundFields = this.chooseCell(0)
-        if (foundFields.length > 0) {
-            let newPos = random(foundFields);
-            let newX = newPos[0];
-            let newY = newPos[1];
-            matrix[newY][newX] = this.colorValue
-            matrix[this.y][this.x] = 0
-            this.x = newX
-            this.y = newY
-        }
+        super.move();
     }
     eat() {
         let foundFields = [this.chooseCell(1), this.chooseCell(2), this.chooseCell(3), this.chooseCell(5)]
@@ -449,52 +344,17 @@ class Mensch {
 // stirbt nach 20 Durchlaufe
 // mul nach 10
 // wenn ein Lebewesen es ist stirbt es
-class Pilz {
+class Pilz extends LivingCreature{
     constructor(x, y) {
-        this.y = y;
-        this.x = x;
-        this.colorValue = 5;
+        super(x, y, 5);
         this.eatCounter = 0;
         this.notEatCounter = 0;
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
     }
     updateNeighbours() {
-        this.neighbors = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1],
-        ]
+        super.updateNeighbours();
     }
-
     chooseCell(symbol) {
-        this.updateNeighbours()
-        let found = [];
-        for (let i = 0; i < this.neighbors.length; i++) {
-            let pos = this.neighbors[i];
-            let x = pos[0];
-            let y = pos[1];
-
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] === symbol) {
-                    found.push(pos);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(symbol);
     }
     live() {
         this.eatCounter++;

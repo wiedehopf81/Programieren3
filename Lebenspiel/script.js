@@ -27,7 +27,7 @@ function Matrix(breite,hoch){
             if(j%Math.floor(random(1,5))===0 && i%Math.floor(random(3,4))===0){
                 u = 3;
             }
-            if(j%Math.floor(random(3,7))===0 && i%Math.floor(random(7,10))===0){
+            if(j%Math.floor(random(5,7))===0 && i%Math.floor(random(7,10))===0){
                 u = 4;
             }
             if(i===1 && j===1){
@@ -44,9 +44,11 @@ function Matrix(breite,hoch){
 
 let seite=10;
 function setup (){
-    matrix = Matrix(100,100)
+    let hoch=100;
+    let breite=100;
+    matrix = Matrix(hoch,breite)
 
-    frameRate(5);
+    frameRate(10);
     createCanvas(matrix[0].length*seite+1,matrix.length*seite+1);
     background('white')
 
@@ -64,7 +66,13 @@ function setup (){
                 lilaArr.push(new Pilz(j,i));
             }
         }
-        
+    }
+    if(matrix[1][hoch-1]===5){
+        for (let i = 0; i < hoch; i++) {
+            for (let j = 0; j < breite; j++) { 
+                matrix[i][j]=6;
+            }   
+        }     
     }
 }
 
@@ -117,6 +125,9 @@ function draw(){
             }
             if(matrix[i][j]===5){
                 fill('purple')
+            }
+            if(matrix[i][j]===6){
+                fill('gray')
             }
             rect(j*seite,i*seite,seite,seite)
 

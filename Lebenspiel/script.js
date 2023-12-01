@@ -1,5 +1,5 @@
 
-let matrix = [   
+/*let matrix = [   
 [3, 0, 1, 0, 4],
 [1, 0, 0, 0, 0],
 [0, 1, 0, 0, 0],
@@ -7,7 +7,7 @@ let matrix = [
 [1, 1, 0, 0, 0],
 [1, 1, 0, 2, 0],
 [1, 1, 0, 0, 0]
-]; 
+]; */
 
 let grunArr = [];
 let gelbArr = [];
@@ -17,17 +17,25 @@ let lilaArr = [];
 
 function Matrix(breite,hoch){
     let matrix=[];
-    for(let i=0; i<=hoch; i++){
+    for (let i = 0; i < hoch; i++) {
         matrix[i]=[];
-    }
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-            matrix[i][j]=1;
-        }
-    }
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-            let u = random(1,5)
+        for (let j = 0; j < breite; j++) {
+            let u = 1;
+            if(j%2===0 && i%4===0){
+                u = 2;
+            }
+            if(j%5===0 && i%4===0){
+                u = 3;
+            }
+            if(j%5===0 && i%10===0){
+                u = 4;
+            }
+            if(i===1 && j===1){
+                u = 5;
+            }
+            if(i===breite-2 && j===hoch-2){
+                u = 5;
+            }
             matrix[i][j]=u;
         }
     }
@@ -36,9 +44,7 @@ function Matrix(breite,hoch){
 
 let seite=10;
 function setup (){
-    // matrix = Matrix(100,100)
-    // console.log(matrix)
-    // matrix[50][50]=5;
+    matrix = Matrix(100,100)
 
     frameRate(5);
     createCanvas(matrix[0].length*seite+1,matrix.length*seite+1);

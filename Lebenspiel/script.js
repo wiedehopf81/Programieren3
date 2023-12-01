@@ -21,13 +21,13 @@ function Matrix(breite,hoch){
         matrix[i]=[];
         for (let j = 0; j < breite; j++) {
             let u = 1;
-            if(j%2===0 && i%4===0){
+            if(j%Math.floor(random(2,4))===0 && i%Math.floor(random(1,3))===0){
                 u = 2;
             }
-            if(j%5===0 && i%4===0){
+            if(j%Math.floor(random(1,5))===0 && i%Math.floor(random(3,4))===0){
                 u = 3;
             }
-            if(j%5===0 && i%10===0){
+            if(j%Math.floor(random(3,7))===0 && i%Math.floor(random(7,10))===0){
                 u = 4;
             }
             if(i===1 && j===1){
@@ -66,7 +66,6 @@ function setup (){
         }
         
     }
-    
 }
 
 function draw(){

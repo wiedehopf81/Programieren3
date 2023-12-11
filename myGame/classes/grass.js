@@ -1,4 +1,4 @@
-const LivingCreature = require("./LivingCreature.js")
+const LivingCreature = require("./livingCreature.js")
 
 module.exports = class Grass extends LivingCreature{
     constructor(x, y) {

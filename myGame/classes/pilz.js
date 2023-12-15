@@ -5,7 +5,8 @@ const LivingCreature = require("./livingCreature.js")
 
 module.exports = class Pilz extends LivingCreature{
     constructor(x, y) {
-        super(x, y, 5);
+        super(x, y);
+        this.colorValue = 5;
         this.eatCounter = 0;
         this.notEatCounter = 0;
     }

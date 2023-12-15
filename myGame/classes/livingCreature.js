@@ -1,8 +1,7 @@
 module.exports = class LivingCreature {
-    constructor(x, y, colorValue) {
+    constructor(x, y) {
         this.y = y;
         this.x = x;
-        this.colorValue = colorValue;
         this.neighbors = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -44,7 +43,7 @@ module.exports = class LivingCreature {
     move() {
         let foundFields = this.chooseCell(0)
         if (foundFields.length > 0) {
-            let newPos = random(foundFields);
+            let newPos = Math.floor(Math.random(foundFields));
             let newX = newPos[0];
             let newY = newPos[1];
             matrix[newY][newX] = this.colorValue

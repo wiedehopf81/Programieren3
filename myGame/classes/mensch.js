@@ -2,7 +2,8 @@ const LivingCreature = require("./livingCreature.js")
 
 module.exports = class Mensch extends LivingCreature{
     constructor(x, y) {
-        super(x, y, 4);
+        super(x, y);
+        this.colorValue = 4;
         this.eatCounter = 0;
         this.notEatCounter = 0;
     }
@@ -18,9 +19,9 @@ module.exports = class Mensch extends LivingCreature{
     eat() {
         let foundFields = [this.chooseCell(1), this.chooseCell(2), this.chooseCell(3), this.chooseCell(5)]
         if (foundFields.length > 0) {
-            let myarray = random(foundFields);
+            let myarray = Math.floor(Math.random(foundFields));
             if (myarray.length > 0) {
-                let newPos = random(myarray);
+                let newPos = Math.floor(Math.random(myarray));
                 let newX = newPos[0];
                 let newY = newPos[1];
                 if (matrix[newY][newX] === 5) {
@@ -80,7 +81,7 @@ module.exports = class Mensch extends LivingCreature{
         if (this.eatCounter >= 28) {
             let foundFields = this.chooseCell(0)
             if (foundFields.length > 0) {
-                let newPos = random(foundFields);
+                let newPos = Math.floor(Math.random(foundFields));
                 let newX = newPos[0];
                 let newY = newPos[1];
                 blackArr.push(new Mensch(newX, newY))

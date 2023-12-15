@@ -2,7 +2,8 @@ const LivingCreature = require("./livingCreature.js")
 
 module.exports = class Grassfraser extends LivingCreature{
     constructor(x, y) {
-        super(x, y, 2);
+        super(x, y);
+        this.colorValue = 2;
         this.eatCounter = 0;
         this.notEatCounter = 0;
     }
@@ -20,9 +21,9 @@ module.exports = class Grassfraser extends LivingCreature{
     eat() {
         let foundFields = [this.chooseCell(1), this.chooseCell(5)]
         if (foundFields.length > 0) {
-            let myarray = random(foundFields);
+            let myarray = Math.floor(Math.random(foundFields));
             if (myarray.length > 0) {
-                let newPos = random(myarray);
+                let newPos = Math.floor(Math.random(myarray));
                 let newX = newPos[0];
                 let newY = newPos[1];
                 if (matrix[newY][newX] === 5) {

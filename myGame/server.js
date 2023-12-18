@@ -5,10 +5,15 @@ const Mensch = require("./classes/mensch.js");
 const Pilz = require("./classes/pilz.js");
 
 const express = require("express");
+const { ClientRequest } = require("http");
 const app = express();
 
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
+
+let clients = [];
+let isGameRunning = false;
+let interValID;
 
 app.use(express.static('./clients'));
 
@@ -18,16 +23,17 @@ app.get('/', function(req, res){
 
 server.listen(3000, function (){
     console.log("Der Server läuft auf port 3000...");
-    initGame();
-    setInterval(function(){
-        updateGame();
-    }, 1000);
-   
-});
 
-io.on('connection', function(socket){
-    console.log('ws connection established...');
-    socket.emit('matrix', matrix);
+   io.on('connection', function(socket){
+       console.log('ws connection established...');
+       clients.push(socket.id);
+       if(clients.length == 1 && isGameRunning == false){
+           console.log("Starte Spiel!!!");
+           initGame();
+           interValID= setInterval(updateGame, 500);
+           isGameRunning = true;
+       }
+    });
 });
 
 matrix = [];
@@ -44,19 +50,16 @@ function generateMatrix(breite,hoch){
         matrix[i]=[];
         for (let j = 0; j < breite; j++) {
             let u = 1;
-            if(j%Math.floor(Math.random(2,4))===0 && i%Math.floor(Math.random(1,3))===0){
+            if(j%Math.floor(Math.random() * (4-2)+2)===0 && i%Math.floor(Math.random() * (3 - 1) + 1)===0){
                 u = 2;
             }
-            if(j%Math.floor(Math.random(1,5))===0 && i%Math.floor(Math.random(3,4))===0){
+            if(j%Math.floor(Math.random() * (5 - 1) + 1)===0 && i%Math.floor(Math.random() * (4 - 3) + 3)===0){
                 u = 3;
             }
-            if(j%Math.floor(Math.random(5,7))===0 && i%Math.floor(Math.random(7,10))===0){
+            if(j%Math.floor(Math.random() * (7 - 5) + 5)===0 && i%Math.floor(Math.random() * (10 - 7) + 7)===0){
                 u = 4;
             }
             if(i===1 && j===1){
-                u = 5;
-            }
-            if(i===breite-2 && j===hoch-2){
                 u = 5;
             }
             matrix[i][j]=u;
@@ -84,6 +87,9 @@ function initGame(){
             }
         }
     }
+
+    console.log("Sende Matrix zu clients");
+    io.sockets.emit('matrix', matrix);
 }
 
 function updateGame(){
@@ -112,4 +118,6 @@ function updateGame(){
         let frassObj = lilaArr[i];
         frassObj.live()
     }
+    console.log("Sende Matrix zu clients");
+    io.sockets.emit('matrix', matrix);
 }

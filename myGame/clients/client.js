@@ -18,7 +18,7 @@ function setup(){
     createCanvas(500,500);
 }
 
-function drawMatrix(){
+function draw(){
     console.log('zeichne...', matrix)
     for(let i=0; i<matrix.length; i++){
         for(let j=0; j<matrix[i].length; j++){
@@ -38,7 +38,7 @@ function drawMatrix(){
             if(matrix[i][j]===5){
                 fill('#a020f0')
             }
-            rect(j*seite,i*seite,seite,seite)
+            rect(j*side,i*side,side,side)
 
         }
     }

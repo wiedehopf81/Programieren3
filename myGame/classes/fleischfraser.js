@@ -14,14 +14,26 @@ module.exports = class Fleischfraser extends LivingCreature{
         return super.chooseCell(symbol);
     }
     move() {
-        super.move();
+        let foundFields = this.chooseCell(0)
+        if (foundFields.length > 0) {
+            let randomIndex = Math.floor(Math.random()*foundFields.length);
+            let newPos = foundFields[randomIndex];
+            let newX = newPos[0];
+            let newY = newPos[1];
+            matrix[newY][newX] = this.colorValue
+            matrix[this.y][this.x] = 0
+            this.x = newX
+            this.y = newY
+        }
     }
     eat() {
         let foundFields = [this.chooseCell(2), this.chooseCell(5)]
         if (foundFields.length > 0) {
-            let myarray = Math.floor(Math.random(foundFields));
+            let randomIndex = Math.floor(Math.random()*foundFields.length);
+            let myarray = foundFields[randomIndex];
             if (myarray.length > 0) {
-                let newPos = Math.floor(Math.random(myarray));
+                let randomIndex = Math.floor(Math.random()*myarray.length);
+                let newPos = myarray[randomIndex];
                 let newX = newPos[0];
                 let newY = newPos[1];
                 if (matrix[newY][newX] === 5) {

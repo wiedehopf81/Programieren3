@@ -40,16 +40,4 @@ module.exports = class LivingCreature {
             [this.x + 1, this.y + 1],
         ]
     }
-    move() {
-        let foundFields = this.chooseCell(0)
-        if (foundFields.length > 0) {
-            let newPos = Math.floor(Math.random(foundFields));
-            let newX = newPos[0];
-            let newY = newPos[1];
-            matrix[newY][newX] = this.colorValue
-            matrix[this.y][this.x] = 0
-            this.x = newX
-            this.y = newY
-        }
-    }
 }

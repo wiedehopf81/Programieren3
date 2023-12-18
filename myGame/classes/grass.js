@@ -14,7 +14,8 @@ module.exports = class Grass extends LivingCreature{
         if (this.multiply >= 6) {
             let foundFields = this.chooseCell(0)
             if (foundFields.length > 0) {
-                let newPos = Math.floor(Math.random(foundFields));
+                let randomIndex = Math.floor(Math.random()*foundFields.length);
+                let newPos = foundFields[randomIndex]; 
                 let newX = newPos[0];
                 let newY = newPos[1];
                 grunArr.push(new Grass(newX, newY))

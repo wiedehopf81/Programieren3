@@ -35,7 +35,7 @@ module.exports = class Pilz extends LivingCreature{
         }
     }
     mul() {
-        if (this.eatCounter >= 10) {
+        if (this.eatCounter >= 5) {
             let foundFields = [this.chooseCell(0), this.chooseCell(1)]
             if (foundFields.length > 0) {
                 for (let i = 0; i < foundFields.length; i++) {
